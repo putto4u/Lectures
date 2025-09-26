@@ -1,0 +1,129 @@
+
+
+# 10장. GitHub와 CI/CD, 자동화 실습
+
+---
+
+## 10-1. CI/CD란 무엇인가?
+
+- **CI(Continuous Integration, 지속적 통합)**
+  - 개발자가 코드를 자주 통합하고 테스트하는 개발 프로세스
+  - 코드 품질 자동 검증(빌드, 테스트 등)
+- **CD(Continuous Delivery/Deployment, 지속적 배포)**
+  - 최신 코드를 자동으로 배포 환경까지 전달
+- **주요 목적**
+  - 코드 변경시마다 자동 빌드·테스트·배포
+  - 개발/배포 자동화 → 품질·속도 향상
+
+---
+
+## 10-2. GitHub Actions란?
+
+- **GitHub에서 제공하는 무료/유료 자동화 도구**
+- **Workflow**: “자동화 작업” 단위(빌드, 테스트, 배포 등)
+- `.github/workflows/` 폴더에 YAML 파일로 설정
+
+---
+
+## 10-3. Workflow 파일 구조
+
+```yaml
+name: CI Example
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: pytest
+```
+
+- **on**: 언제 실행? (push, PR 등)
+- **jobs**: 작업 묶음
+- **steps**: 실제 실행 단계
+
+---
+
+## 10-4. 대표적인 자동화 예시
+
+1. **코드 푸시 시 자동 테스트**
+   - push → 빌드/테스트 → 결과 알림
+2. **PR 생성 시 코드 품질 검사**
+3. **배포 자동화**
+   - main 브랜치에 merge → 서버/클라우드로 자동 업로드
+
+---
+
+## 10-5. 실습: 간단한 GitHub Actions 만들기
+
+1. `.github/workflows/ci.yml` 새 파일 생성
+2. 아래 예제 입력(파이썬 예시):
+
+   ```yaml
+   name: Python CI
+
+   on: [push]
+
+   jobs:
+     build:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v3
+         - name: Set up Python
+           uses: actions/setup-python@v4
+           with:
+             python-version: '3.11'
+         - name: Install dependencies
+           run: pip install -r requirements.txt
+         - name: Run tests
+           run: pytest
+   ```
+3. git add/commit/push
+4. GitHub에서 Actions 탭에서 동작 확인
+
+---
+
+## 10-6. 워크플로우 템플릿 활용
+
+- GitHub에서 다양한 템플릿 제공
+  - Node.js, Java, Docker 등 언어별로 선택 가능
+- **Marketplace**에서 수많은 Action(플러그인) 검색
+
+---
+
+## 10-7. 실전 자동화 활용 팁
+
+- **Secret(비밀값) 관리**  
+  배포 키, 인증 정보 등은 “Settings → Secrets”에 등록, 워크플로우에 `${{ secrets.키이름 }}`으로 불러오기
+- **병렬 작업(jobs), 조건부 실행(if)** 등 고급 기능 활용
+- **Slack/Discord/이메일 알림** 연동
+- **코드 포맷터, 린터 등 품질 자동 검증**
+
+---
+
+## 10-8. 실습 과제 예시
+
+1. 워크플로우 추가 → PR시 자동 테스트 돌리기
+2. main 브랜치에 merge 시, “배포됨” 메시지 자동 알림
+3. 실패 시 알림, 배포 자동화까지 도전
+
+---
+
+## 10-9. 참고자료 및 추가 학습
+
+- [GitHub Actions 공식 문서](https://docs.github.com/actions)
+- [awesome-actions (유용한 액션 모음)](https://github.com/sdras/awesome-actions)
+- [CI/CD 실습 예제 모음](https://github.com/marketplace?type=actions)
+
+---
+
+더 구체적인 실습, 예제 워크플로우, 특정 언어/환경에 맞는 자동화가 필요하면 말씀해 주세요!
