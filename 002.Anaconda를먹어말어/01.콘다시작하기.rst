@@ -1,0 +1,114 @@
+conda 시작하기 
+Conda는 Windows, macOS, Linux에서 실행되는 패키지 및 환경 관리를 위한 강력한 명령줄 도구입니다.
+
+Conda를 시작하기 위한 이 가이드에서는 Conda를 시작하고 사용하여 환경을 만들고 패키지를 설치하는 기본 사항을 살펴봅니다.
+
+팁
+
+Anaconda Navigator는 명령줄에서 명령을 실행하지 않고도 conda를 사용할 수 있게 해주는 그래픽 데스크톱 애플리케이션입니다.
+
+자세한 내용은 Anaconda Navigator 시작하기를 참조하세요 .
+
+시작하기 전에 
+설치를 부트스트랩하려면 Miniconda 나 Miniforgeconda 와 같은 최소 설치 프로그램을 사용하세요 .
+
+Conda는 Anaconda Distribution 에도 포함되어 있습니다 .
+
+메모
+
+Miniconda와 Anaconda Distribution은 Anaconda 저장소를 사용하도록 미리 구성되어 있으며 , 해당 저장소에서 패키지를 설치/사용하는 것은 Anaconda 서비스 약관 의 적용을 받습니다 . 즉, 상업적 유료 라이선스가 필요할 수 있습니다 . 개인, 대학 및 직원 수가 200명 미만(2024년 9월 기준)인 회사는 예외입니다.
+
+궁금한 사항에 대한 답변을 얻으려면 서비스 약관 , Anaconda의 학술 및 연구 서비스 약관에 대한 최신 업데이트 , Anaconda 서비스 약관 FAQ를 검토하세요 .
+
+conda 시작 
+Conda는 Windows, macOS 또는 Linux에서 사용할 수 있으며 모든 터미널 애플리케이션(또는 셸)과 함께 사용할 수 있습니다.
+
+
+윈도우
+Anaconda 또는 Miniforge 명령 프롬프트(cmd.exe)를 엽니다. PowerShell 프롬프트는 Anaconda Distribution 또는 Miniconda에서도 사용할 수 있습니다.
+
+
+맥OS
+
+리눅스
+환경 만들기 
+Conda를 사용하면 각각 고유한 파일, 패키지 및 패키지 종속성을 포함하는 별도의 환경을 만들 수 있습니다. 각 환경의 내용은 서로 상호 작용하지 않습니다.
+
+새로운 환경을 만드는 가장 기본적인 방법은 다음 명령을 사용하는 것입니다.
+
+conda create -n <env-name>
+환경을 생성하는 동안 패키지를 추가하려면 환경 이름 뒤에 패키지를 지정하세요.
+
+conda create -n myenvironment python numpy pandas
+환경 작업에 대한 자세한 내용은 환경 관리를 참조하세요 .
+
+환경 목록 
+모든 환경 목록을 보려면:
+
+conda info --envs
+다음과 유사한 환경 목록이 나타납니다.
+
+conda environments:
+
+   base           /home/username/Anaconda3
+   myenvironment   * /home/username/Anaconda3/envs/myenvironment
+팁
+
+활성 환경은 별표(*)가 있는 환경입니다.
+
+현재 환경을 기본 환경으로 변경하려면:
+
+conda activate
+팁
+
+환경이 비활성화되면 해당 이름이 프롬프트에 더 이상 표시되지 않고 별표(*)가 기본 환경으로 돌아갑니다. 확인하려면 명령을 반복하세요.conda info --envs
+
+패키지 설치 
+이전에 생성한 환경에 패키지를 설치할 수도 있습니다. 이렇게 하려면 수정하려는 환경을 활성화하거나 명령줄에서 환경 이름을 지정하세요.
+
+# via environment activation
+conda activate myenvironment
+conda install matplotlib
+
+# via command line option
+conda install --name myenvironment matplotlib
+패키지 검색 및 설치에 대한 자세한 내용은 패키지 관리를 참조하세요 .
+
+채널 지정 
+채널은 패키지가 저장되는 위치(사용자 컴퓨터 또는 인터넷의 다른 곳)입니다. 기본적으로 conda는 기본 채널 에서 패키지를 검색합니다 .
+
+원하는 패키지가 conda-forge와 같은 다른 채널에 있는 경우 패키지를 설치할 때 채널을 수동으로 지정할 수 있습니다.
+
+conda install conda-forge::numpy
+.condarc 파일 에서 기본 채널을 재정의할 수도 있습니다 . 직접적인 예시는 채널 위치(채널)를 참조하거나 .condarc conda 구성 파일 사용 관련 문서 전문을 읽어보세요 .
+
+팁
+
+Anaconda.org 에서 검색하여 더 많은 패키지와 채널을 찾아보세요 .
+
+conda 업데이트 
+conda 버전을 보려면 다음 명령을 사용하세요.
+
+conda --version
+어떤 환경에서 이 명령을 실행하든 conda는 현재 버전을 표시합니다.
+
+콘다 25.7.1.dev100
+메모
+
+오류 메시지가 나타나면 터미널 창을 닫았다가 다시 열어서 conda를 설치하는 데 사용한 것과 동일한 사용자 계정으로 로그인했는지 확인하세요.command not found: conda
+
+conda를 최신 버전으로 업데이트하려면:
+
+conda update conda
+Conda는 사용자의 버전을 최신 버전과 비교한 다음, 설치 가능한 항목을 표시합니다.
+
+팁
+
+conda를 항상 최신 버전으로 업데이트하는 것이 좋습니다. conda의 공식 버전 지원 정책은 CEP 10을 참조하세요 .
+
+더 많은 정보 
+Conda 치트 시트
+
+전체 문서
+
+무료 커뮤니티 지원
