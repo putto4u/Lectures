@@ -1,50 +1,71 @@
-## Phase 1: Environment Setup (환경 구축 및 실습 준비)
+## Phase 1: Environment Setup (로컬·보안·IaC 및 자동화 환경 구축)
 
-본격적인 클라우드 실습에 앞서, AWS 자원을 안전하게 다루기 위한 기초 체력을 기르는 단계입니다. AWS는 설정 실수로 인한 **'요금 폭탄'** 위험이 있으므로, 내 PC에 리눅스 가상 환경을 구축하여 충분히 숙련되는 과정이 필수적입니다.
-
----
-
-### **1. 실습 환경 및 소프트웨어 스펙 (Prerequisites)**
-
-실습에 사용되는 핵심 소프트웨어와 권장 버전 정보입니다. 하이브리드 클라우드 설계를 위해 가장 안정적인 버전을 기준으로 구성합니다.
-
-| 구분 | 소프트웨어 및 OS | 버전 | 비고 |
-| --- | --- | --- | --- |
-| **하이퍼바이저** | **Oracle VM VirtualBox** | **7.0.6** | 가상 머신(VM) 구동을 위한 소프트웨어 |
-| **게스트 OS** | **Ubuntu server** | **22.04.3 LTS** | 실습용 리눅스 운영체제 (장기 지원 버전) |
-| **실습 환경** | CLI (Terminal) | - | 리눅스 명령줄 인터페이스 기반 실습 |
+본격적인 클라우드 네이티브 설계와 IaC(코드 기반 인프라) 및 구성 관리 자동화 실습을 위해 가상화 환경, 자동화 도구, 원격 접속 환경을 구축합니다. 클라우드 실습은 설정 실수로 인한 **'요금 폭탄'** 위험이 크므로, 로컬 가상 머신에서 충분히 숙달하는 과정이 필수적입니다.
 
 ---
 
-### **2. 로컬 환경 실습의 중요성**
+### **1. 실습 소프트웨어 및 도구 설치 목록 (System Prerequisites)**
 
-* **비용 발생 방지:** AWS에서 자원을 생성하고 삭제하지 않거나 설정을 잘못할 경우 예기치 못한 비용이 청구됩니다. **[유료 과금 주의]**
-* **자유로운 실험:** 시스템이 손상되어도 언제든 초기화하거나 재설치가 가능하므로 부담 없이 명령어를 연습할 수 있습니다.
-* **CLI 숙련도 향상:** 클라우드 관리의 99%는 터미널을 통한 리눅스 명령어 작업입니다. 가상 머신을 통해 이 환경을 미리 완벽히 경험해야 합니다.
+실습의 효율성을 위해 관련 있는 도구끼리 그룹화하였습니다. 모든 소프트웨어는 공식 배포처를 통해 설치하시기 바랍니다. 특히 도커는 GUI 환경인 'Desktop'과 서버 환경용 'Engine'을 구분하여 준비합니다.
+
+| 분류 | 소프트웨어 및 OS | 권장 버전 | 공식 다운로드 링크 | 비고 |
+| --- | --- | --- | --- | --- |
+| **가상화** | **VirtualBox** | **7.0.6** | [다운로드](https://www.virtualbox.org/wiki/Download_Old_Builds_7_0) | 하이퍼바이저 엔진 |
+|  | **VirtualBox Extension Pack** | **7.0.6** | [다운로드](https://www.virtualbox.org/wiki/Downloads) | USB/RDP 등 부가기능 애드온 |
+| **운영체제** | **Ubuntu Desktop** | **22.04.3 LTS** | [다운로드](https://releases.ubuntu.com/22.04/) | 기본 서버 실습용 OS |
+|  | **Kali Linux** | **Latest** | [다운로드](https://www.kali.org/get-kali/) | 보안 및 모니터링 실습용 |
+| **컨테이너** | **Docker Engine (정식)** | **Latest** | [설치안내](https://docs.docker.com/engine/install/ubuntu/) | 리눅스 서버용 정식 도커 엔진 |
+|  | **Docker Desktop** | **Latest** | [다운로드](https://www.docker.com/products/docker-desktop/) | Windows/Mac용 GUI 관리 도구 |
+|  | **Minikube** | **Latest** | [다운로드](https://minikube.sigs.k8s.io/docs/start/) | 로컬 쿠버네티스 환경 |
+| **자동화/IaC** | **Terraform** | **Latest** | [다운로드](https://developer.hashicorp.com/terraform/downloads) | 인프라 자동화 구성 (IaC) |
+|  | **Ansible** | **Latest** | [설치안내](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) | 구성 관리 자동화 도구 |
+| **웹 실습** | **Playground** | **-** | [접속](https://labs.play-with-docker.com/) | Docker/K8s 웹 기반 실습 환경 |
+| **원격 접속** | **Xshell** | **Latest** | [다운로드](https://www.netsarang.com/ko/free-for-home-school/) | 가정/학교용 무료 SSH |
+|  | **MobaXterm** | **Latest** | [다운로드](https://mobaxterm.mobatek.net/download.html) | **[추천]** SSH/SFTP/X11 통합 |
+|  | **PuTTY** | **Latest** | [다운로드](https://www.putty.org/) | 경량 오픈소스 SSH 클라이언트 |
+| **개발/관리** | **VS Code** | **Latest** | [다운로드](https://code.visualstudio.com/) | 인프라 코드 작성용 에디터 |
+|  | **Git** | **Latest** | [다운로드](https://www.google.com/search?q=https://git-scm.com/downloads) | 코드 이력 관리 및 협업 도구 |
 
 ---
 
-### **3. 가상 머신(VirtualBox) 설치 및 구성**
+### **2. 필수 확장팩 및 부가 도구 (Add-ons & Extensions)**
 
-가상 머신을 구동하기 위해 하드웨어 자원을 가상화해 주는 하이퍼바이저를 먼저 설치합니다.
+* **Docker Engine vs Desktop:** 실무 서버 환경과 동일한 실습을 위해 Ubuntu VM 내에 **Docker Engine**을 직접 설치하는 과정이 포함됩니다. Desktop 버전은 로컬 개발 편의성을 위해 사용합니다.
+* **Ansible Core:** 리눅스(Ubuntu) 가상 머신 내에서 설치하여 여러 대의 서버 설정을 한 번에 제어하는 실습에 사용합니다.
+* **Play-with-Docker/K8s (Playground):** 별도의 설치 없이 브라우저에서 즉시 컨테이너 실습을 할 수 있는 환경으로, 로컬 리소스가 부족할 때 유용합니다.
+* **VS Code 필수 확장팩:**
+* *HashiCorp Terraform:* Terraform 문법 강조
+* *Ansible Extension:* 플레이북 작성 지원
+* *Remote - SSH:* 가상 머신 및 AWS 서버 원격 편집
 
-* **역할:** 내 PC(Windows/macOS) 위에서 리눅스 등 다른 운영체제를 독립적으로 실행하는 환경 제공.
-* **설치 가이드:** [VirtualBox 설치 및 우분투 VM 설치 상세 가이드](https://github.com/putto4u/EnvTools/blob/main/VirtualBox%EC%84%A4%EC%B9%98%EC%99%80%EC%9A%B0%EB%B6%84%ED%88%ACvm%EC%84%A4%EC%B9%98.md)
-* **설정 주의:** 설치 시 네트워크 어댑터 설정 과정에서 인터넷이 잠시 끊길 수 있으나 정상적인 과정입니다.
+
 
 ---
 
-### **4. 가상 머신에 리눅스(Ubuntu) 설치하기**
+### **3. 핵심 도구별 실습 역할**
 
-1. **VM 생성:** VirtualBox에서 '새로 만들기'를 클릭하여 이름(`Ubuntu-Lab`), 메모리, CPU를 할당합니다.
-2. **리소스 할당:** 내 PC 본체의 성능 저하를 방지하기 위해 **2GB RAM / 2 CPU** 정도를 권장합니다.
-3. **OS 설치:** 준비한 **Ubuntu 22.04.3 ISO** 파일을 가상 광학 드라이브에 삽입하고 부팅하여 설치를 진행합니다.
+* **Docker & Kubernetes:** 애플리케이션의 컨테이너화와 오케스트레이션 운영을 학습합니다. 특히 정식 엔진 설치를 통해 리눅스 환경에서의 데몬(Daemon) 관리를 익힙니다.
+* **Terraform & Ansible:** Terraform으로 AWS 인프라(하드웨어)를 생성하고, Ansible로 그 내부의 소프트웨어 설정을 자동화하는 전체 파이프라인을 구축합니다.
+* **Kali Linux:** 구축된 자동화 인프라의 보안 취약점을 점검하는 도구로 활용합니다.
+
+---
+
+### **4. 환경 구성 권장 사양 (Lab Spec)**
+
+* **가상 머신 사양:** Ubuntu(2 CPU / 4GB RAM), Kali(2 CPU / 2GB RAM) 권장.
+* **네트워크 구성:** VM 간 원활한 Ansible 통신 및 Docker 클러스터 구성을 위해 '호스트 전용 어댑터'를 추가로 활성화합니다.
 
 ---
 
 ### **5. [학습 전략 및 예방 조치]**
 
-* **AWS 전환 시점:** 파일 관리, 네트워크 설정, 패키지 설치 등 리눅스 기본 명령어가 손에 익었을 때 AWS 실습으로 넘어가는 것이 가장 경제적이고 안전합니다.
-* **[유료 전환 및 과금 예방]:** AWS 실습 진입 즉시 **'결제 알람(AWS Budgets)'**을 설정하여 의도치 않은 비용 발생을 원천 차단해야 합니다.
+* **정식 엔진 설치 연습:** Ubuntu VM에 Docker Engine을 설치할 때는 공식 Repository를 등록하고 GPG 키를 설정하는 보안 절차를 반드시 준수해야 합니다.
+* **IaC 사전 검증:** Terraform 적용 전 `terraform plan`을 통해 생성될 자원을 반드시 확인하십시오. 불필요한 고사양 자원 생성을 막는 최전방 방어선입니다.
+* **[유료 과금 및 관리 주의]:**
+* **AWS Budgets:** AWS 실습 시작 즉시 예상 비용 알람을 설정하십시오.
+* **Docker Desktop 라이선스:** 기업 환경(직원 250명 이상 또는 매출 1천만 달러 이상)에서 사용 시 유료 구독이 필요할 수 있으니 주의하십시오.
+* **Ansible/Terraform 연동:** 자동화 스크립트로 AWS 자원을 대량 생성할 때, 실습 종료 후 반드시 `destroy` 명령으로 자원을 회수해야 합니다.
 
-Next Step: **Oracle VM VirtualBox 설치 및 리눅스(Ubuntu) 설치 실습**
+
+
+Next Step: **Docker Engine(정식) 및 Terraform 초기 환경 설정 실습**
