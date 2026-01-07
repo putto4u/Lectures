@@ -20,9 +20,9 @@
 | **자동화/IaC** | **Terraform** | **Latest** | [다운로드](https://developer.hashicorp.com/terraform/downloads) | 인프라 자동화 구성 (IaC) |
 |  | **Ansible** | **Latest** | [설치안내](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) | 구성 관리 자동화 도구 |
 | **웹 실습** | **Playground** | **-** | [접속](https://labs.play-with-docker.com/) | Docker/K8s 웹 기반 실습 환경 |
-| **원격 접속** | **Xshell** | **Latest** | [다운로드](https://www.netsarang.com/ko/free-for-home-school/) | 가정/학교용 무료 SSH |
-|  | **MobaXterm** | **Latest** | [다운로드](https://mobaxterm.mobatek.net/download.html) | **[추천]** SSH/SFTP/X11 통합 |
-|  | **PuTTY** | **Latest** | [다운로드](https://www.putty.org/) | 경량 오픈소스 SSH 클라이언트 |
+| **원격 접속** | **Xshell** | **Latest** | [다운로드](https://www.netsarang.com/ko/free-for-home-school/) | 강력한 세션 관리 (가정/학교 무료) |
+|  | **MobaXterm** | **Latest** | [다운로드](https://mobaxterm.mobatek.net/download.html) | **[추천]** SSH/SFTP/X11 통합 무료 도구 |
+|  | **PuTTY** | **Latest** | [다운로드](https://www.putty.org/) | 가장 가볍고 표준적인 SSH 클라이언트 |
 | **개발/관리** | **VS Code** | **Latest** | [다운로드](https://code.visualstudio.com/) | 인프라 코드 작성용 에디터 |
 |  | **Git** | **Latest** | [다운로드](https://www.google.com/search?q=https://git-scm.com/downloads) | 코드 이력 관리 및 협업 도구 |
 
@@ -32,11 +32,15 @@
 
 * **Docker Engine vs Desktop:** 실무 서버 환경과 동일한 실습을 위해 Ubuntu VM 내에 **Docker Engine**을 직접 설치하는 과정이 포함됩니다. Desktop 버전은 로컬 개발 편의성을 위해 사용합니다.
 * **Ansible Core:** 리눅스(Ubuntu) 가상 머신 내에서 설치하여 여러 대의 서버 설정을 한 번에 제어하는 실습에 사용합니다.
-* **Play-with-Docker/K8s (Playground):** 별도의 설치 없이 브라우저에서 즉시 컨테이너 실습을 할 수 있는 환경으로, 로컬 리소스가 부족할 때 유용합니다.
 * **VS Code 필수 확장팩:**
 * *HashiCorp Terraform:* Terraform 문법 강조
 * *Ansible Extension:* 플레이북 작성 지원
 * *Remote - SSH:* 가상 머신 및 AWS 서버 원격 편집
+
+
+* **MobaXterm & PuTTY:**
+* **PuTTY**는 설치가 필요 없는 단일 실행 파일로 매우 가벼우며 기본적인 SSH 연결 테스트에 최적입니다.
+* **MobaXterm**은 SSH 접속과 동시에 SFTP(파일 탐색기)를 지원하여 파일 전송이 매우 직관적입니다.
 
 
 
@@ -59,12 +63,12 @@
 
 ### **5. [학습 전략 및 예방 조치]**
 
-* **정식 엔진 설치 연습:** Ubuntu VM에 Docker Engine을 설치할 때는 공식 Repository를 등록하고 GPG 키를 설정하는 보안 절차를 반드시 준수해야 합니다.
+* **원격 접속 도구 활용:** 가상 머신의 좁은 콘솔 대신 **MobaXterm**이나 **PuTTY**를 사용하는 것이 복사/붙여넣기 및 효율적인 작업 관리에 유리합니다.
 * **IaC 사전 검증:** Terraform 적용 전 `terraform plan`을 통해 생성될 자원을 반드시 확인하십시오. 불필요한 고사양 자원 생성을 막는 최전방 방어선입니다.
 * **[유료 과금 및 관리 주의]:**
 * **AWS Budgets:** AWS 실습 시작 즉시 예상 비용 알람을 설정하십시오.
 * **Docker Desktop 라이선스:** 기업 환경(직원 250명 이상 또는 매출 1천만 달러 이상)에서 사용 시 유료 구독이 필요할 수 있으니 주의하십시오.
-* **Ansible/Terraform 연동:** 자동화 스크립트로 AWS 자원을 대량 생성할 때, 실습 종료 후 반드시 `destroy` 명령으로 자원을 회수해야 합니다.
+* **VirtualBox Extension Pack:** 개인 및 교육용(PUEL)으로만 무료이며, 기업체에서 상업용으로 사용 시 라이선스 구매가 필요합니다.
 
 
 
